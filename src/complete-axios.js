@@ -52,7 +52,7 @@ export class CompleteAxios extends LitElement {
     render() {
       return html`
         <h2>You complete me...</h2>
-        <input type="text" style="width: 1300px; height: 140px;" id="topicTextBox">
+        <input type="text" style="width: 800px; height: 140px;" id="topicTextBox">
         <br>
         <br>
         <button id="myButton">Finish this sentence</button>
