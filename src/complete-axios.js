@@ -20,8 +20,8 @@ export class CompleteAxios extends LitElement {
     this.version = null;
   }
 
-  async _postxAPIStatement(e) {
-    console.log(e.detail);
+  async _askGPT(e) {
+    //console.log(e.detail);
     let base = ''; 
     if (
       window.location.origin.startsWith("http://127.0.0.1") ||
@@ -31,16 +31,33 @@ export class CompleteAxios extends LitElement {
         .replace(/127.0.0.1:8(.*)/, "localhost:3000")
         .replace(/localhost:8(.*)/, "localhost:3000");
     }
-    return await fetch(`${base}/api/sheet?search=insert`).then((r) => r.ok ? r.json() : []).then((data) => {
+    return await fetch(`${base}/api/askgpt?search=insert`).then((r) => r.ok ? r.json() : []).then((data) => {
       return data;
     });
   }
 
-  render() {
-    return html`
-<h2>Hello world</h2>
-    `;
+  firstUpdated() {
+    const button = this.shadowRoot.querySelector('#myButton');
+    if (button) {
+      button.addEventListener('click', async () => {
+        const results = await this._askGPT();
+        const box = this.shadowRoot.querySelector('#myTextBox');
+        if (box) {
+         box.value = results; 
+        }
+      });
+    }
   }
+    render() {
+      return html`
+        <h2>Hello world</h2>
+        <br>
+        <button id="myButton">Get Help</button>
+        <br>
+        <textarea id="myTextBox" rows="20" cols="100" wrap="hard"></textarea>
+        <br>
+      `;
+    }
 }
 
 customElements.define('complete-axios', CompleteAxios);
