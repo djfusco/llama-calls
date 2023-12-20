@@ -31,7 +31,8 @@ export class CompleteAxios extends LitElement {
         .replace(/127.0.0.1:8(.*)/, "localhost:3000")
         .replace(/localhost:8(.*)/, "localhost:3000");
     }
-    return await fetch(`${base}/api/askgpt?search=insert`).then((r) => r.ok ? r.json() : []).then((data) => {
+    const topic = this.shadowRoot.querySelector('#topicTextBox').value;
+    return await fetch(`${base}/api/askgpt?search=${topic}`).then((r) => r.ok ? r.json() : []).then((data) => {
       return data;
     });
   }
@@ -50,11 +51,14 @@ export class CompleteAxios extends LitElement {
   }
     render() {
       return html`
-        <h2>Hello world</h2>
+        <h2>You complete me...</h2>
+        <input type="text" style="width: 1300px; height: 140px;" id="topicTextBox">
         <br>
-        <button id="myButton">Get Help</button>
         <br>
-        <textarea id="myTextBox" rows="20" cols="100" wrap="hard"></textarea>
+        <button id="myButton">Finish this sentence</button>
+        <br>
+        <br>
+        <textarea id="myTextBox" rows="10" cols="100" wrap="hard"></textarea>
         <br>
       `;
     }

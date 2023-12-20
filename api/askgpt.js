@@ -7,7 +7,7 @@ export default async function handler(req, res) {
 
     try {
 
-        const searchFinal = 'complete this sentence -  chocolate cake' + req.query.search;
+        const searchFinal = 'complete this sentence - ' + req.query.search;
         const apiKey = process.env.CHAGPT_KEY;
         const data = {
 
