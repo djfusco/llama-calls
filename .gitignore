@@ -2,6 +2,9 @@
 /.idea
 /.vscode
 
+## env vars
+.env
+
 ## system files
 .DS_Store
 

@@ -6,7 +6,25 @@ export default async function handler(req, res) {
     console.log(rosterInfo);
 
     try {
-        const response = await axios.get("https://api.github.com/users/mapbox");
+
+        const apiKey = process.env.CHAGPT_KEY;
+        const data = {
+            "model": "gpt-3.5-turbo",
+            "messages": [{"role": "user", "content": "Say this is a test!"}],
+            "temperature": 0.7
+        };
+
+        //const response = await axios.get("https://api.github.com/users/mapbox");
+        
+        const response = await axios.post("https://api.openai.com/v1/chat/completions", data,
+        {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + apiKey
+            }
+        });
+
+
         console.log(response.data);
         console.log(response.status);
         console.log(response.statusText);
