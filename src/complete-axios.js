@@ -57,6 +57,23 @@ export class CompleteAxios extends LitElement {
 
   }
 
+  async _askPicture(e) {
+    //console.log(e.detail);
+    let base = ''; 
+    if (
+      window.location.origin.startsWith("http://127.0.0.1") ||
+      window.location.origin.startsWith("http://localhost")
+    ) {
+      base = window.location.origin
+        .replace(/127.0.0.1:8(.*)/, "localhost:3000")
+        .replace(/localhost:8(.*)/, "localhost:3000");
+    }
+    const pictopic = this.shadowRoot.querySelector('#topicPicture').value;
+    return await fetch(`${base}/api/getpicture?search=${pictopic}`).then((r) => r.ok ? r.json() : []).then((data) => {
+      return data;
+    });
+  }
+
   firstUpdated() {
     const button = this.shadowRoot.querySelector('#myButton');
     if (button) {
@@ -77,6 +94,22 @@ export class CompleteAxios extends LitElement {
         if (boxDefine) {
           boxDefine.value = resultsDefine; 
         }
+      });
+    }
+
+    const picbutton = this.shadowRoot.querySelector('#picButton');
+    if (picbutton) {
+      picbutton.addEventListener('click', async () => {
+        const picresults = await this._askPicture();
+        const picbox = this.shadowRoot.querySelector('#myTextPic');
+        if (picbox) {
+         picbox.value = picresults.data[0].revised_prompt; 
+        }
+        const imageElement = this.shadowRoot.querySelector('#dynamicImage');
+        if (imageElement) {
+          imageElement.src = picresults.data[0].url; 
+        }
+
       });
     }
 
@@ -102,6 +135,19 @@ export class CompleteAxios extends LitElement {
         </div>
         <br><br>
         <textarea id="defintionBox" rows="10" cols="100" wrap="hard"></textarea>
+
+        <br><br>
+        <br><br>
+        <h3>Enter the picture you want</h3>
+        <input type="text" style="width: 800px; height: 140px;" id="topicPicture">
+        <br>
+        <br>
+        <button id="picButton">Find this picture</button>
+        <br>
+        <br>
+        <textarea id="myTextPic" rows="10" cols="100" wrap="hard"></textarea>
+        <br>
+        <img id="dynamicImage" src="../assets/placeholder.png" alt="Image Placeholder" width="300">
 
       `;
     }
