@@ -147,7 +147,7 @@ export class CompleteAxios extends LitElement {
         <br>
         <textarea id="myTextPic" rows="10" cols="100" wrap="hard"></textarea>
         <br>
-        <img id="dynamicImage" src="../assets/placeholder.png" alt="Image Placeholder" width="300">
+        <img id="dynamicImage" src="" alt="Image Placeholder" width="300">
 
       `;
     }
