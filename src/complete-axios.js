@@ -101,19 +101,56 @@ export class CompleteAxios extends LitElement {
     if (picbutton) {
       picbutton.addEventListener('click', async () => {
         const picresults = await this._askPicture();
-        const picbox = this.shadowRoot.querySelector('#myTextPic');
-        if (picbox) {
-         picbox.value = picresults.data[0].revised_prompt; 
-        }
-        const imageElement = this.shadowRoot.querySelector('#dynamicImage');
-        if (imageElement) {
-          imageElement.src = picresults.data[0].url; 
-        }
+        for (var key in picresults) {
+          if (picresults.hasOwnProperty(key)) {
+            if (typeof picresults[key] === "object") {
+              if(key === "data")
+              {
+                const firstDataObject = picresults[key][0];
+                for (var insidekey in firstDataObject) {
+                  if (firstDataObject.hasOwnProperty(insidekey)) {
+                    var value = firstDataObject[insidekey];
+                    
+                    if (insidekey === "revised_prompt"){
+                      const picbox = this.shadowRoot.querySelector('#myTextPic');
+                      if (picbox) {
+                       picbox.value = value; 
+                      }
+                    }
 
+                    if (insidekey === "url"){
+                      const imageElement = this.shadowRoot.querySelector('#dynamicImage');
+                      if (imageElement) {
+                        imageElement.src = value; 
+                      }
+                    }
+                    ///console.log(insidekey + ": " + value);
+                  }
+                }
+
+                /*
+                const picDesc = picresults[key][0];
+                ///console.log(picresults[key][0];
+                const picbox = this.shadowRoot.querySelector('#myTextPic');
+                if (picbox) {
+                 picbox.value = picDesc; 
+                }
+
+                const picURL = picresults[key][1];
+                const imageElement = this.shadowRoot.querySelector('#dynamicImage');
+                if (imageElement) {
+                  imageElement.src = picURL; 
+                }
+                */
+
+              }
+            }
+          }
+        }
       });
     }
-
   }
+
     render() {
       return html`
         <h2>You complete me...</h2>
