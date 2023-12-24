@@ -70,6 +70,9 @@ export class CompleteAxios extends LitElement {
     }
     const pictopic = this.shadowRoot.querySelector('#topicPicture').value;
     return await fetch(`${base}/api/getpicture?search=${pictopic}`).then((r) => r.ok ? r.json() : []).then((data) => {
+      //TEMP
+      console.log(data);
+      //TEMP
       return data;
     });
   }
