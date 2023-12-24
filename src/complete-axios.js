@@ -70,9 +70,7 @@ export class CompleteAxios extends LitElement {
     }
     const pictopic = this.shadowRoot.querySelector('#topicPicture').value;
     return await fetch(`${base}/api/getpicture?search=${pictopic}`).then((r) => r.ok ? r.json() : []).then((data) => {
-      //TEMP
       console.log(data);
-      //TEMP
       return data;
     });
   }
@@ -127,25 +125,8 @@ export class CompleteAxios extends LitElement {
                         imageElement.src = value; 
                       }
                     }
-                    ///console.log(insidekey + ": " + value);
                   }
                 }
-
-                /*
-                const picDesc = picresults[key][0];
-                ///console.log(picresults[key][0];
-                const picbox = this.shadowRoot.querySelector('#myTextPic');
-                if (picbox) {
-                 picbox.value = picDesc; 
-                }
-
-                const picURL = picresults[key][1];
-                const imageElement = this.shadowRoot.querySelector('#dynamicImage');
-                if (imageElement) {
-                  imageElement.src = picURL; 
-                }
-                */
-
               }
             }
           }
